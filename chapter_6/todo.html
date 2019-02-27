@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>To Do List</title>
+	<style type="text/css">
+		li {
+		list-style-type: none;
+		}
+	</style>
+</head>
+<body>
+
+	<div id="app">
+
+		<h2>
+			All Tasks:
+		</h2>
+		<ul>
+			<li v-for="task in tasks" v-text="task.description"></li>
+		</ul>
+
+		<h2>
+			Uncompleted Tasks:
+		</h2>
+		<ul>
+			<li v-for="task in uncompletedTasks">
+				<input type="button" v-on:click="completeTask(task.id)">
+				{{ task.description }}	
+			</li>
+		</ul>		
+
+
+		<h2>
+			Completed Tasks:
+		</h2>		
+		<ul>
+			<li v-for="task in completedTasks">
+				<input type="button" v-on:click="incompleteTask(task.id)">
+				{{ task.description }}		
+			</li>
+		</ul>
+
+	</div>
+
+	<!-- development version, includes helpful console warnings -->
+	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+	<script type="text/javascript">
+		var app = new Vue({
+			el: '#app',
+
+			data: {
+				tasks: [
+					{ id: 0, description: 'Code for 1 hour', completed: false },
+					{ id: 1, description: 'Wash dishes', completed: false },
+					{ id: 2, description: 'Do Yoga video', completed: false },
+					{ id: 3, description: 'Complete chapter 4 of Entreleadership', completed: false },
+					{ id: 4, description: 'Walk Osie', completed: false },					
+				],
+
+				msg : 'You can relax an enjoy the sunset!'
+			},
+
+			computed: {
+				uncompletedTasks() {
+					return this.tasks.filter(task => ! task.completed);
+				},
+
+				completedTasks() {
+					return this.tasks.filter(task => task.completed);
+				},				
+			},
+
+			methods: {
+				completeTask(number) {
+					this.tasks[number].completed = true;
+				},
+
+				incompleteTask(number) {
+					this.tasks[number].completed = false;
+				}
+			}
+		});
+	</script>
+
+
+</body>
+</html>
